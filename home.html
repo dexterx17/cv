@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SANTANA</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .intro {
+            background-color: black;
+            width: 100%;
+            height: 100vh;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h2{
+            color: white;
+            text-align: center;
+        }
+
+        #debug-info{
+            position: fixed;
+            right: 0;
+            top: 0;
+            border: 1px dotted red;
+            border-radius: 0 0 0 10px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding: 10px;
+        }
+        #debug-info dl{
+            font-size: small;
+        }
+        #debug-info dl dd{
+            color: rgb(200,200,200)
+        }
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <div class="intro-loader">
+            <img id="logo" src="./assets/img/logo_original.png" alt="Logo SANTANA">
+        </div>
+        <h2 id="text">SANTANA</h2>
+
+        <div id="debug-info">
+            <dl>
+                <dt>wScreen: </dt>
+                <dd>
+                    <small id="width-screen"></small> px
+                </dd>
+                <dt>hScreen: </dt>
+                <dd>
+                    <small id="height-screen"></small> px
+                </dd>
+                
+                <dt>wLogo: </dt>
+                <dd>
+                    <small id="width-logo"></small> px
+                </dd>
+                <dt>hLogo: </dt>
+                <dd>
+                    <small id="height-logo"></small> px
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <script>
+        loaderTL = new TimelineMax();
+
+        //gsap.registerPlugin(Physics2DPlugin);
+        var imgLogo = document.getElementById('logo'), 
+        textLogo = document.getElementById('text'),
+        debugInfo = document.getElementById('debug-info');
+
+        //Get DOM elements to show screen data
+        var widthScreen = document.getElementById('width-screen'),
+        heightScreen = document.getElementById('height-screen');
+        //Get Width and height screen
+        let hScreen =  window.innerHeight;
+        let wScreen =  window.innerWidth;
+        //write values to DOM
+        widthScreen.innerHTML = wScreen;
+        heightScreen.innerHTML = hScreen;
+
+
+        //Get DOM elements to show logo data
+        var widthLogo = document.getElementById('width-logo'),
+        heightLogo = document.getElementById('height-logo');
+        //Get Width and height of logo image
+        let wLogo = gsap.getProperty("#logo", "width");
+        let hLogo = gsap.getProperty("#logo", "height");
+        //write values to DOM
+        widthLogo.innerHTML = wLogo;
+        heightLogo.innerHTML = hLogo;
+
+
+        
+        loaderTL.fromTo( imgLogo, .5, { y: '-40', opacity: 0, delay: .30 }, { y: 0, opacity: 1, delay: .6, ease: Power2.easeOut } );
+        
+        loaderTL.fromTo( textLogo, { x: '-40', opacity: 0, delay: .30, color: 'gray' }, { x: 0, opacity: 1, color: 'white', delay: .6, ease: Power2.easeOut }, "-=1" );
+        loaderTL.fromTo( textLogo, 3, { color: 'gray' }, { opacity: 0.1, y: '+190',  ease: Power2.easeOut } );
+    
+
+        loaderTL.to( imgLogo, { y: -hScreen/3 , x: -wScreen/3 , opacity: 1 , duration: 0.5, ease: Power2.easeOut }, "-=3" );
+        loaderTL.to( imgLogo, { y: -hScreen/3 , x: wScreen/3 , opacity: 1 , duration: 0.5, ease: Power2.easeOut }, "-=2" );
+        loaderTL.to( imgLogo, { y: hScreen/3 , x: wScreen/3 , opacity: 1 , duration: 0.5, ease: Power2.easeOut }, "-=1" );
+        loaderTL.to( imgLogo, { y: hScreen/3 , x: -wScreen/3 , opacity: 1 , duration: 0.5, ease: Power2.easeOut }, "-=0" );
+        loaderTL.to( imgLogo, { y: 0 , x: 0 , opacity: 1 , delay: .2, ease: Power2.easeOut } );
+        
+        loaderTL.to( imgLogo, { scale: 4, opacity: 0, duration: 2} );
+        
+        loaderTL.to( textLogo, { scale: 4, opacity: 0, duration: 1},"-=1" );
+        
+         
+        
+        function animateIn(){
+            loaderTL.to( imgLogo, .5, { rotation: 360, duration: 2, delay: .6, ease: Power2.easeOut } );
+            
+          //  loaderTL.to( imgLogo, {  physics2D: {velocity: 300, angle: -60, gravity: 400}} );
+        }
+
+        imgLogo.onclick = function() {
+            animateIn();
+            //setTimeout(animateOut_2, 2000);
+        };
+
+        //overlayTL.fromTo( overlay, .6, { top: '100%', bottom: 0 }, { top: 0, ease: Power4.easeInOut } );
+
+//             loaderTL = new TimelineMax();
+
+//   var animateOut = function() {
+//     overlayTL.to( overlay, .6, { bottom: '100%', ease: Power4.easeInOut, delay: .25 } );
+//     loaderTL.to( loader, .5, { y: '-40', opacity: 0 } );
+//   };
+
+//   var animateOut_2 = function() {
+//     overlayTL.to( overlay, .6, { top: '100%', ease: Power4.easeInOut, delay: .25 } );
+//     loaderTL.to( loader, .5, { y: '40', opacity: 0 } );
+//   }
+
+//   var animateIn = function() {
+//     overlayTL.fromTo( overlay, .6, { top: '100%', bottom: 0 }, { top: 0, ease: Power4.easeInOut } );
+//     loaderTL.fromTo( loader, .5, { y: '40', opacity: 0, delay: .30 }, { y: 0, opacity: 1, delay: .6, ease: Power2.easeOut } );
+//   };
+
+//   animateOut_2();
+
+
+</script>
+</body>
+</html>
