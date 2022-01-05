@@ -13,6 +13,10 @@ downFlag = document.getElementById('down-flag'),
 debugInfo = document.getElementById('debug-info');
 
 gsap.set('#main',{'display':'none'});
+gsap.set('#minilogo',{ opacity: 0});
+gsap.set('.subtitulo',{ opacity: 0});
+gsap.set('.titulo span',{ opacity: 0});
+gsap.set(downFlag,{ opacity: 0});
 
 //Get DOM elements to show screen data
 var widthScreen = document.getElementById('width-screen'),
@@ -57,30 +61,49 @@ tl.fromTo( textLogo, 3, { color: 'gray' }, { color:'black', opacity: 0.5, y: '+1
 tl.to( textLogo, { scale: 4, opacity: 0, duration: 1},">" );
 
 //Cambiar fondo a blanco
-tl.to( introDiv, { backgroundColor : '#ffffff', opacity: 0.5, duration: 2, display: 'none'},"finLogo" );
+tl.to( introDiv, { backgroundColor : '#ffffff', opacity: 0.0, duration: 2, display: 'none'},"finLogo" );
 
 //introDiv.style.display = 'none';
 
-tl.to(downFlag, { y: hScreen/3, duration: 1, onComplete: animateDownFlag });
 
-function animateDownFlag(){
-    downFlag.classList.add('absolute');
-    downFlag.classList.add('bottom-2');
-    downFlag.classList.add('bounce-top');
-}
- 
 
-tl.to(mainDiv,{ display:'initial', onComplete: animateSections} ,"=-2");
+tl.to(mainDiv,{ duration: 0.1, display:'initial', onComplete: animateSections});
 
 
 
 function animateSections() {
+    
+    var tl1 = gsap.timeline({  yoyo: true });
+    
+    tl1.fromTo('#minilogo',{x: -wScreen/3, scale: 2 }, {x:0, opacity:1, scale: 1, duration: 1.5});
+    
+    tl1.fromTo('.titulo span',{color:'green'},{duration: 1.5, opacity:1, y: "random(-200, 200)", stagger: 0.2, color:'black'});
+    
+    tl1.to('.subtitulo',{ opacity:1, duration: 1 })
+    
+    tl1.fromTo(downFlag,
+        {opacity: 0.2}, 
+        { 
+            y: (hScreen/3)+30, 
+            opacity:1, 
+            duration: 2,
+            ease: "elastic.out(1, 0.3)",
+            onComplete: animateDownFlag 
+        },
+        '<'
+    );
+
+    function animateDownFlag(){
+        console.log('finish intro');
+    }
+
     
     var imgHeart = document.getElementById('img-heart');
     
     gsap.fromTo(imgHeart,{scale:0.8},{
         duration: 2,
         scale:1.2, 
+        ease: "elastic.out(1, 0.3)",
         scrollTrigger: {
             trigger: '.nosotros',
             markers: true,
@@ -90,6 +113,7 @@ function animateSections() {
             toggleActions: 'play pause reverse reset',
         }
     });
+
 
     // Nosotros
     // gsap.to('#nosotros', { autoAlpha: 1, 
@@ -103,31 +127,31 @@ function animateSections() {
     //     } 
     // });
 
-    // const sections = document.querySelectorAll('section');
+    const sections = document.querySelectorAll('section');
      
-    // sections.forEach((section, index) => {
-    //     // your code for each section goes here
-    //     gsap.to(section, {
-    //         autoAlpha: 1,
-    //         scrollTrigger: {
-    //             trigger: section,
-    //             start: 'top bottom-=100',
-    //             toggleActions: 'play none none reverse',
-    //             //markers: true
-    //         }
-    //     });
-    //     console.log(section.clientHeight);
+    sections.forEach((section, index) => {
+        // your code for each section goes here
+        gsap.to(section, {
+            autoAlpha: 1,
+            scrollTrigger: {
+                trigger: section,
+                start: 'top bottom-=100',
+                toggleActions: 'play none none reverse',
+                //markers: true
+            }
+        });
+        console.log(section.clientHeight);
         
-    //     ScrollTrigger.create({
-    //         trigger: section,
-    //         id: index+1,
-    //         start: 'top center',
-    //         end: () => `+=${section.clientHeight + 30}`,
-    //         toggleActions: 'play reverse none reverse',
-    //         toggleClass: {targets: section, className: "is-active"},
-    //          markers: true
-    //       })
-    // });
+        ScrollTrigger.create({
+            trigger: section,
+            id: index+1,
+            start: 'top center',
+            end: () => `+=${section.clientHeight + 30}`,
+            toggleActions: 'play reverse none reverse',
+            toggleClass: {targets: section, className: "is-active"},
+             markers: true
+          })
+    });
 }
 
 // let split = document.getElementsByClassName(".headerText")[0];
