@@ -37,6 +37,15 @@
     visibility: visible !important;
 }
 
+.who_we_are{
+    width: 400px;
+}
+.full-screen {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
 .fillViewport {
     display: flex;
     justify-content: center;
@@ -53,19 +62,103 @@
     background-size: cover;
 }
 
+#panels {
+    overflow-x: hidden;
+}
+
+#panels #panels-container {
+    height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ddd;
+  }
+  #panels #panels-container .panel {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    color: #333;
+    text-align: left;
+    border-right: 1px solid #f00;
+  }
+  #panels #panels-container .panel img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  #panels #panels-container .panel .panels-navigation {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  #panels #panels-container .panel .anchor-panel,
+  #panels #panels-container .panel .nav-panel {
+    color: #000;
+    text-transform: uppercase;
+    margin-right: 2rem;
+  }
+  #panels #panels-container .panels-navigation {
+    position: absolute;
+    width: 100%;
+    bottom: 2rem;
+    right: 2rem;
+  }
+
+  progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 3px;
+    border: none;
+    background: transparent;
+    z-index: 1;
+  }
+  progress::-webkit-progress-bar {
+    background: transparent;
+  }
+  progress::-webkit-progress-value {
+    background: linear-gradient(to left, #db38b5,#01b3e3,#25ce7b,#fdc741,#ff6b01,#fc4236);
+    background-attachment: fixed;
+  }
+  progress::-moz-progress-bar {
+    background: linear-gradient(to left, #db38b5,#01b3e3,#25ce7b,#fdc741,#ff6b01,#fc4236);
+    background-attachment: fixed;
+  }
 
 
 
-
-section {
+.section {
         background-color: lightblue;
         min-height: 200px;
-        margin-bottom: 30px;
         height: 100vh; /* if you don't want it to take up the full screen, reduce this number */
         visibility: hidden;
         transition: background-color 0.3s linear;
 }
 
-section.is-active {
+.section.is-active {
         background-color: lightpink;
+}
+
+.que-hacemos{
+    background: url(../img/sliders/slide3.jpg);
+}
+.que-hacemos .contenido{
+    background: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
 }

@@ -1,4 +1,4 @@
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 let tl = new TimelineMax();
 let tlTexto = new TimelineMax();
@@ -16,6 +16,7 @@ gsap.set('#main',{'display':'none'});
 gsap.set('#minilogo',{ opacity: 0});
 gsap.set('.subtitulo',{ opacity: 0});
 gsap.set('.titulo span',{ opacity: 0});
+gsap.set('.titulo2 span',{ opacity: 0});
 gsap.set(downFlag,{ opacity: 0});
 
 //Get DOM elements to show screen data
@@ -50,7 +51,7 @@ tl.fromTo( imgLogo, 1, {y: -hScreen, x: -wScreen/2, opacity: 0, }, { opacity: 1,
 //Centrar logo
 tl.to( imgLogo, { y: 0 , x: 0, duration: 2, opacity: 1 , ease: Power2.easeOut } );
 //Agrandar y desaparacer
-tl.to( imgLogo, { scale: 4, opacity: 0, duration: 2},"finLogo" );
+tl.to( imgLogo, { scale: 4, opacity: 0, border:'1px solid red', borderRadius: '50px', duration: 2},"finLogo" );
 
 
 //Entrada de texto dese derecha
@@ -73,11 +74,19 @@ tl.to(mainDiv,{ duration: 0.1, display:'initial', onComplete: animateSections});
 
 function animateSections() {
     
+    gsap.to('progress', {
+        value: 100,
+        ease: 'none',
+        scrollTrigger: { scrub: 0.1 }
+      });
+
     var tl1 = gsap.timeline({  yoyo: true });
     
     tl1.fromTo('#minilogo',{x: -wScreen/3, scale: 2 }, {x:0, opacity:1, scale: 1, duration: 1.5});
     
-    tl1.fromTo('.titulo span',{color:'green'},{duration: 1.5, opacity:1, y: "random(-200, 200)", stagger: 0.2, color:'black'});
+    tl1.fromTo('.titulo span',{color:'green'},{duration: 1, opacity:1, y: "random(-200, 200)", stagger: 0.2, color:'black'});
+
+    tl1.fromTo('.titulo2 span',{color:'green'},{duration: 1, opacity:1, y: "random(-200, 200)", stagger: 0.05, color:'black'});
     
     tl1.to('.subtitulo',{ opacity:1, duration: 1 })
     
@@ -98,22 +107,122 @@ function animateSections() {
     }
 
     
-    var imgHeart = document.getElementById('img-heart');
-    
-    gsap.fromTo(imgHeart,{scale:0.8},{
-        duration: 2,
-        scale:1.2, 
-        ease: "elastic.out(1, 0.3)",
-        scrollTrigger: {
+    gsap.fromTo('#img-heart',
+        {
+            scale:0.7, 
+            ease: "elastic.out(1, 0.3)",
+        },{
+            duration: 2,
+            scale:1, 
+            ease: "elastic.out(1, 0.3)",
+            scrollTrigger: {
+                trigger: '.nosotros',
+                markers: true,
+                //start: 'top top+=100',
+                //events: onEnter onLeave onEnterBack OnLeaveBack
+                //options: play pause, resume, reset, restart, complete, reverse, none
+                toggleActions: 'play pause reverse reset',
+            }
+        });
+
+    // gsap.to('.nosotros-p1',{
+    //     transformX: -25,
+    //     scrollTrigger: '.nosotros'
+    // });
+
+    gsap.utils.toArray(".nosotros-p, .nosotros-h4").forEach(function(elem) {
+        hide(elem); 
+        ScrollTrigger.create({
             trigger: '.nosotros',
-            markers: true,
-            //start: 'top top+=100',
-            //events: onEnter onLeave onEnterBack OnLeaveBack
-            //options: play pause, resume, reset, restart, complete, reverse, none
-            toggleActions: 'play pause reverse reset',
-        }
+            start: 'top center',
+            onEnter: function() { animateFrom(elem) }, 
+            onEnterBack: function() { animateFrom(elem, -1) },
+            onLeave: function() { hide(elem) } // assure that the element is hidden when scrolled into view
+        });
     });
 
+    gsap.utils.toArray("#panel-1 img").forEach(function(elem, index) {
+        hide(elem); 
+        ScrollTrigger.create({
+            trigger: '#panel-1',
+            start: 'top center',
+            onEnter: function() { animateFrom(elem) }, 
+            onEnterBack: function() { animateFrom(elem, -1) },
+            onLeave: function() { hide(elem) } // assure that the element is hidden when scrolled into view
+        });
+    });
+
+    function hide(elem) {
+        gsap.set(elem, {autoAlpha: 0});
+    }
+
+    function animateFrom(elem, direction) {
+        direction = direction || 1;
+        var x = 0,
+            y = direction * 100;
+        if(elem.classList.contains("gs_reveal_fromLeft")) {
+          x = -100;
+          y = 0;
+        } else if (elem.classList.contains("gs_reveal_fromRight")) {
+          x = 100;
+          y = 0;
+        }
+        elem.style.transform = "translate(" + x + "px, " + y + "px)";
+        elem.style.opacity = "0";
+        gsap.fromTo(elem, {x: x, y: y, autoAlpha: 0}, {
+          duration: 1.25, 
+          delay: 0.2,
+          x: 0,
+          y: 0, 
+          autoAlpha: 1, 
+          ease: "expo", 
+          overwrite: "auto"
+        });
+      }
+
+    /* Main navigation */
+    document.querySelectorAll(".anchor").forEach(anchor => {
+    anchor.addEventListener("click", function(e) {
+        e.preventDefault();
+        let targetElem = document.querySelector(e.target.getAttribute("href")),
+            y = targetElem;
+        if (targetElem && panelsContainer.isSameNode(targetElem.parentElement)) {
+            let totalScroll = tween.scrollTrigger.end - tween.scrollTrigger.start,
+                totalMovement = (panels.length - 1) * targetElem.offsetWidth;
+            y = Math.round(tween.scrollTrigger.start + (targetElem.offsetLeft / totalMovement) * totalScroll);
+        }
+        gsap.to(window, {
+            scrollTo: {
+                y: y,
+                autoKill: false
+            },
+            duration: 1
+        });
+    });
+    });
+
+    let panelsSection = document.querySelector("#panels"),
+	panelsContainer = document.querySelector("#panels-container"),
+	tween;
+
+    /* Panels */
+    const panels = gsap.utils.toArray("#panels-container .panel");
+    tween = gsap.to(panels, {
+        xPercent: -100 * ( panels.length - 1 ),
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#panels-container",
+            pin: true,
+            start: "top top",
+            scrub: 1,
+            snap: {
+                snapTo: 1 / (panels.length - 1),
+                inertia: false,
+                duration: {min: 0.1, max: 0.1}
+            },
+            end: () =>  "+=" + (panelsContainer.offsetWidth - innerWidth)
+        }
+    });
 
     // Nosotros
     // gsap.to('#nosotros', { autoAlpha: 1, 
@@ -127,7 +236,7 @@ function animateSections() {
     //     } 
     // });
 
-    const sections = document.querySelectorAll('section');
+    const sections = document.querySelectorAll('.section');
      
     sections.forEach((section, index) => {
         // your code for each section goes here

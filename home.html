@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js"></script>
+
     <link rel="stylesheet" href="dist/home.css">
 </head>
 <body>
@@ -41,49 +43,80 @@
 
     </div>
     <main id="main">
-        
+        <progress max="100" value="0"></progress>
         <div class="fillViewport blue">
             <div class="flex items-center">
                 <img src="./assets/img/logo_original.png" class="w-16 h-16" alt="Logo SANTANA" id="minilogo">
-                <h1 class="text-xl ml-2 titulo text-gray">
-                    <span>S</span>
-                    <span>A</span>
-                    <span>N</span>
-                    <span>T</span>
-                    <span>A</span>
-                    <span>N</span>
-                    <span>A</span>
-                    <span class="mx-1"> </span>
-                    <span>e</span>
-                    <span>s</span>
-                    <span>t</span>
-                    <span>u</span>
-                    <span>d</span>
-                    <span>i</span>
-                    <span>o</span>
-
-                </h1>
+                <div>
+                    <h1 class="text-xl ml-2 titulo text-gray">
+                        <span>S</span>
+                        <span>A</span>
+                        <span>N</span>
+                        <span>T</span>
+                        <span>A</span>
+                        <span>N</span>
+                        <span>A</span>
+                        <span class="mx-1"> </span>
+                        <span>e</span>
+                        <span>s</span>
+                        <span>t</span>
+                        <span>u</span>
+                        <span>d</span>
+                        <span>i</span>
+                        <span>o</span>
+                    </h1>
+                    <h2 class="font-sans font-italic ml-2 titulo2 text-sm">
+                        <span>I</span>
+                        <span>d</span>
+                        <span>e</span>
+                        <span>a</span>
+                        <span>s</span>
+                        <span class="mx-1"> </span>
+                        <span>C</span>
+                        <span>r</span>
+                        <span>e</span>
+                        <span>a</span>
+                        <span>t</span>
+                        <span>i</span>
+                        <span>v</span>
+                        <span>a</span>
+                        <span>s</span>
+                        <span class="mx-1"> </span>
+                        <span>y</span>
+                        <span class="mx-1"> </span>
+                        <span>O</span>
+                        <span>r</span>
+                        <span>i</span>
+                        <span>g</span>
+                        <span>i</span>
+                        <span>n</span>
+                        <span>a</span>
+                        <span>l</span>
+                        <span>e</span>
+                        <span>s</span>
+                    </h2>
+                </div>
             </div>
-            <p class="mt-4 font-mono text-sm subtitulo">Deslízate hacia abajo para más conocer sobre nosotros...</p>
+            <p class="mt-4 font-mono text-xs subtitulo">Deslízate hacia abajo para más conocer sobre nosotros...</p>
             <svg id="down-flag" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
             </svg>
         </div> 
 
-        <div id="nosotros" class="nosotros" aria-label="Image Description">
-            <div class="">
-                <div class="flex items-center">
-                    <div class="p-12 mx-auto flex-1">
+        <section id="nosotros" class="nosotros" aria-label="Image Description">
+            
+            <div class="my-0">
+                <div class="flex flex-col sm:flex-row items-center">
+                    <div class="p-12 mx-auto flex-1 order-2 sm:order-1">
                         <div class="max-w-md mx-auto text-center">
-                            
-                            <p>SANTANA estudio es una agencia creativa, de espíritu joven y multicultural, que nació de una idea. Una idea que se engranó en un garaje y poco a poco, se fue convirtiendo en lo que se ahora, un espacio lleno de gente talentosa que hasta hoy mantienen el empeño de seguir creciendo</p>
-                            <h4 class="font-bold py-1">
+                            <p class="nosotros-p gs_reveal_fromLeft">SANTANA estudio es una agencia creativa, de espíritu joven y multicultural, que nació de una idea. Una idea que se engranó en un garaje y poco a poco, se fue convirtiendo en lo que se ahora, un espacio lleno de gente talentosa que hasta hoy mantienen el empeño de seguir creciendo</p>
+                            <h4 class="nosotros-h4 font-bold py-3">
                                 LO HACEMOS <span style="color:#00ff00;">CON PASIÓN</span>
                             </h4>
-                            <p>Estamos orgullosos de nuestro Crew. Talentosos, honorables y creativos, que junto a sus racionales contra partes hacen una familia de ambidiestros gustosos por darle dignidad a las mejores ideas.</p>            
+                            <p class="nosotros-p gs_reveal_fromRight">Estamos orgullosos de nuestro Crew. Talentosos, honorables y creativos, que junto a sus racionales contra partes hacen una familia de ambidiestros gustosos por darle dignidad a las mejores ideas.</p>            
                         </div>
                     </div>
-                    <div class="flex-1">
+                    <div class="flex-1 order-1 sm:order-2">
                         <div class="p-12">
                             <img class="w-100 who_we_are" id="img-heart" src="./img/who_we_are.png" alt="Who are SANTANA estudio">
                         </div>
@@ -91,23 +124,133 @@
                 </div>
             </div>
 
-        </div>
-
-        <section>
-            <h1 class="headerText">
-              ¿Qué hacemos?
-            </h1>
-            <button>
-                Conoce nuestro portafolio
-            </button>
         </section>
 
-        <section >
+        <section class="section que-hacemos">
+            <div class="contenido p-8">
+
+                <h1 class="headerText text-white">
+                  ¿Qué hacemos?
+                </h1>
+                <button class="text-center text-gray-300">
+                    Conoce nuestro portafolio
+                </button>
+            </div>
+        </section>
+
+        <section id="panels">
+
+            <div id="panels-container" style="width: 400%;">
+                <article id="panel-1" class="panel full-screen bg-red-500">
+                    <div class="flex items-center">
+                        <div class="flex-1">
+                            <img src="./img/icons/campanas.png" class="gs_reveal_fromLeft" alt="Campañas Publicitarias">
+                        </div>
+                        <div class="flex-1 flex flex-col px-4 py-8">
+            
+                            <h2 class="font-semibold text-lg py-4">Campañas Publicitarias</h2>
+            
+                            <p class="step-description">
+                                <ul class="list-disc hover:list-square">
+                                    <li>Ideas</li>
+                                    <li>Creatividad</li>
+                                    <li>Estrategia</li>
+                                    <li>Planes de marketing</li>
+                                    <li>Reposicionamiento de marcas</li>
+                                    <li>Nuevas ideas de negocio</li>
+                                    <li>Nuevos productos</li>
+                                </ul>
+                            </p>
+            
+                            <div class="panels-navigation text-right">
+                                <div class="nav-panel" data-sign="plus"><a href="#panel-2" class="anchor">Siguiente</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article id="panel-2" class="panel full-screen bg-orange-700">
+                    <div class="flex items-center">
+                        <div class="flex-1">
+                            <img src="./img/icons/diseno.png"  class="gs_reveal_fromRight" alt="Diseño Gráfico">
+                        </div>
+                        <div class="flex-1 flex flex-col px-8 py-4">
+                            <h2 class="font-semibold text-lg py-4">Diseño Gráfico</h2>
+                            <p class="step-description">
+                                <ul class="list-disc hover:list-square">
+                                    <li>Identidad Corporativa</li>
+                                    <li>Editorial</li>
+                                    <li>Ilustración</li>
+                                </ul>
+                            </p>
+            
+                            <div class="panels-navigation">
+                            <div class="nav-panel" data-sign="minus"><a href="#panel-1" class="anchor">Siguiente</a></div>
+                            <div class="nav-panel" data-sign="plus"><a href="#panel-3" class="anchor">Atras</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article id="panel-3" class="panel full-screen bg-purple-500">
+                    <div class="flex items-center">
+                        <div class="flex-1">
+                            <img src="./img/icons/audio-visual.png" class="gs_reveal_fromLeft" alt="Producción Audiovisual">
+                        </div>
+                        <div class="flex-1 flex flex-col px-8 py-4">
+            
+                            <h2 class="font-semibold text-lg py-4">Producción Audiovisual</h2>
+            
+                            <p class="step-description">
+                                <ul>
+                                    <li>Spots y videos</li>
+                                    <li>Fotografía</li>
+                                    <li>Locución</li>
+                                    <li>Cuñas de radio</li>
+                                    <li>Jungles</li>
+                                    <li>Music Advertising</li>
+                                </ul>
+                            </p>
+            
+                            <div class="panels-navigation">
+                            <div class="nav-panel" data-sign="minus"><a href="#panel-2" class="anchor">Siguiente</a></div>
+                            <div class="nav-panel" data-sign="plus"><a href="#panel-4" class="anchor">Atras</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article id="panel-4" class="panel full-screen bg-green-500">
+                    <div class="flex items-center">
+                        <div class="flex-1">
+                            <img src="./img/icons/entorno.png" alt="Sistemas Web y Aplicaciones Móviles">
+                        </div>
+                        <div class="flex-1 flex flex-col px-8 py-4">
+            
+                            <h2 class="font-semibold text-lg py-4">Sistemas Web y  Aplicaciones Móviles</h2>
+            
+                            <p class="step-description">
+                                <ul>
+                                    <li>Programación</li>
+                                    <li>Web</li>
+                                    <li>Apps</li>
+                                    <li>Gamificación</li>
+                                    <li>Social media</li>
+                                </ul>
+                            </p>
+            
+                            <div class="panels-navigation">
+                                <div class="nav-panel" data-sign="minus"><a href="#panel-3" class="anchor">Atras</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section">
             <h1>
                 Nuestra Historia
             </h1>
             
-            <svg class="w-100" id="movie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200">
+            <!-- <svg class="w-100" id="movie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200">
                 <defs>
                 <radialgradient id="filmGradient" cx="600" cy="450" r="340" gradientUnits="userSpaceOnUse">
                     <stop offset="0" stop-color="#e6e6e6" />
@@ -170,23 +313,23 @@
                 </g>
             
             
-            </svg>
+            </svg> -->
     
         </section>
 
-        <section >
+        <section class="section">
             <h1>
                 Nuestros Clientes
             </h1>
         </section>
 
-        <section >
+        <section class="section" >
             <h1>
                 Nuestros Productos
             </h1>
         </section>
 
-        <section >
+        <section  class="section">
             <h1>
                 Contáctenos
             </h1>
