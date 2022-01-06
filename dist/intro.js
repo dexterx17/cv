@@ -49,7 +49,13 @@ tlIntro.fromTo( imgLogo, 1, {y: -hScreen, x: -wScreen/2, opacity: 0, }, { opacit
 //Centrar logo
 tlIntro.to( imgLogo, { y: 0 , x: 0, duration: 2, opacity: 1 , ease: Power2.easeOut } );
 //Agrandar y desaparacer
-tlIntro.to( imgLogo, { scale: 4, opacity: 0, border:'1px solid red', borderRadius: '50px', duration: 2},"finLogo" );
+tlIntro.to( imgLogo, { 
+    scale: 4, 
+    opacity: 0, 
+    boxShadow:"0px 40px 70px 0px rgba(0, 0, 0, 0.22), 0px 27px 24px 0px rgba(0, 0, 0, 0.2)",
+    borderRadius: '50px',
+    duration: 2
+},"finLogo" );
 
 
 //Entrada de texto dese derecha
@@ -111,11 +117,14 @@ function animateSections() {
         yoyo: true,
         scrollTrigger: {
             trigger: '.nosotros',
+            pin:false,
+            start:'top bottom',
             markers: true,
+            id: 'tlNosotros',
             //start: 'top top+=100',
             //events: onEnter onLeave onEnterBack OnLeaveBack
             //options: play pause, resume, reset, restart, complete, reverse, none
-            toggleActions: 'play pause reverse reset',
+            toggleActions: 'play pause restart reset',
         }
     });
 
