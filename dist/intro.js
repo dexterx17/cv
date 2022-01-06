@@ -1,8 +1,5 @@
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-let tl = new TimelineMax();
-let tlTexto = new TimelineMax();
-let tlLogo = new TimelineMax();
 
 //gsap.registerPlugin(Physics2DPlugin);
 var imgLogo = document.getElementById('logo'), 
@@ -40,36 +37,36 @@ let hLogo = gsap.getProperty("#logo", "height");
 widthLogo.innerHTML = wLogo;
 heightLogo.innerHTML = hLogo;
 
+let tlIntro = new TimelineMax();
 
 //Entrada de Logo
-tl.fromTo( imgLogo, 1, {y: -hScreen, x: -wScreen/2, opacity: 0, }, { opacity: 1, delay: .6, ease: Power2.easeOut } );        
+tlIntro.fromTo( imgLogo, 1, {y: -hScreen, x: -wScreen/2, opacity: 0, }, { opacity: 1, delay: .6, ease: Power2.easeOut } );        
 //Movimiento de cuadrado
-// tl.to( imgLogo, { y: -hScreen/3 , x: -wScreen/3 , opacity: 1 , duration: 0.2, ease: Power2.easeOut }  );
-// tl.to( imgLogo, { y: -hScreen/3 , x: wScreen/3 , opacity: 1 , duration: 0.2, ease: Power2.easeOut } );
-// tl.to( imgLogo, { y: hScreen/3 , x: wScreen/3 , opacity: 1 , duration: 0.2, ease: Power2.easeOut } );
-// tl.to( imgLogo, { y: hScreen/3 , x: -wScreen/3 , opacity: 1 , duration: 0.2, ease: Power2.easeOut } );
+// tlIntro.to( imgLogo, { y: -hScreen/3 , x: -wScreen/3 , opacity: 1 , duration: 0.2, ease: Power2.easeOut }  );
+// tlIntro.to( imgLogo, { y: -hScreen/3 , x: wScreen/3 , opacity: 1 , duration: 0.2, ease: Power2.easeOut } );
+// tlIntro.to( imgLogo, { y: hScreen/3 , x: wScreen/3 , opacity: 1 , duration: 0.2, ease: Power2.easeOut } );
+// tlIntro.to( imgLogo, { y: hScreen/3 , x: -wScreen/3 , opacity: 1 , duration: 0.2, ease: Power2.easeOut } );
 //Centrar logo
-tl.to( imgLogo, { y: 0 , x: 0, duration: 2, opacity: 1 , ease: Power2.easeOut } );
+tlIntro.to( imgLogo, { y: 0 , x: 0, duration: 2, opacity: 1 , ease: Power2.easeOut } );
 //Agrandar y desaparacer
-tl.to( imgLogo, { scale: 4, opacity: 0, border:'1px solid red', borderRadius: '50px', duration: 2},"finLogo" );
+tlIntro.to( imgLogo, { scale: 4, opacity: 0, border:'1px solid red', borderRadius: '50px', duration: 2},"finLogo" );
 
 
 //Entrada de texto dese derecha
-tl.fromTo( textLogo, { x: '-40', opacity: 0, delay: .30, color: 'gray' }, { x: 0, opacity: 1, color: 'white', delay: .6, ease: Power2.easeOut }, 1 );
+tlIntro.fromTo( textLogo, { x: '-40', opacity: 0, delay: .30, color: 'gray' }, { x: 0, opacity: 1, color: 'white', delay: .6, ease: Power2.easeOut }, 1 );
 //Salida de texto hacia abajo
-tl.fromTo( textLogo, 3, { color: 'gray' }, { color:'black', opacity: 0.5, y: '+190',  ease: Power2.easeOut } ,'>');
+tlIntro.fromTo( textLogo, 3, { color: 'gray' }, { color:'black', opacity: 0.5, y: '+190',  ease: Power2.easeOut } ,'>');
 //Agrandar y desaparecer
-tl.to( textLogo, { scale: 4, opacity: 0, duration: 1},">" );
+tlIntro.to( textLogo, { scale: 4, opacity: 0, duration: 1},">" );
 
 //Cambiar fondo a blanco
-tl.to( introDiv, { backgroundColor : '#ffffff', opacity: 0.0, duration: 2, display: 'none'},"finLogo" );
+tlIntro.to( introDiv, { backgroundColor : '#ffffff', opacity: 0.0, duration: 2, display: 'none'},"finLogo" );
 
 //introDiv.style.display = 'none';
 
 
 
-tl.to(mainDiv,{ duration: 0.1, display:'initial', onComplete: animateSections});
-
+tlIntro.to(mainDiv,{ duration: 0.1, display:'initial', onComplete: animateSections});
 
 
 function animateSections() {
@@ -80,17 +77,20 @@ function animateSections() {
         scrollTrigger: { scrub: 0.1 }
       });
 
-    var tl1 = gsap.timeline({  yoyo: true });
+    var tlHeader = gsap.timeline({
+        yoyo: true,
+        scrollTrigger: '.header'
+    });
     
-    tl1.fromTo('#minilogo',{x: -wScreen/3, scale: 2 }, {x:0, opacity:1, scale: 1, duration: 1.5});
+    tlHeader.fromTo('#minilogo',{x: -wScreen/3, scale: 2 }, {x:0, opacity:1, scale: 1, duration: 1.5});
     
-    tl1.fromTo('.titulo span',{color:'green'},{duration: 1, opacity:1, y: "random(-200, 200)", stagger: 0.2, color:'black'});
+    tlHeader.fromTo('.titulo span',{color:'green'},{duration: 1, opacity:1, y: "random(-200, 200)", stagger: 0.1, color:'black'});
 
-    tl1.fromTo('.titulo2 span',{color:'green'},{duration: 1, opacity:1, y: "random(-200, 200)", stagger: 0.05, color:'black'});
+    tlHeader.fromTo('.titulo2 span',{color:'green'},{duration: 1, opacity:1, y: "random(-200, 200)", stagger: 0.05, color:'black'});
     
-    tl1.to('.subtitulo',{ opacity:1, duration: 1 })
+    tlHeader.to('.subtitulo',{ opacity:1, duration: 1 })
     
-    tl1.fromTo(downFlag,
+    tlHeader.fromTo(downFlag,
         {opacity: 0.2}, 
         { 
             y: (hScreen/3)+30, 
@@ -107,7 +107,19 @@ function animateSections() {
     }
 
     
-    gsap.fromTo('#img-heart',
+    var tlNosotros = gsap.timeline({
+        yoyo: true,
+        scrollTrigger: {
+            trigger: '.nosotros',
+            markers: true,
+            //start: 'top top+=100',
+            //events: onEnter onLeave onEnterBack OnLeaveBack
+            //options: play pause, resume, reset, restart, complete, reverse, none
+            toggleActions: 'play pause reverse reset',
+        }
+    });
+
+    tlNosotros.fromTo('#img-heart',
         {
             scale:0.7, 
             ease: "elastic.out(1, 0.3)",
@@ -115,42 +127,61 @@ function animateSections() {
             duration: 2,
             scale:1, 
             ease: "elastic.out(1, 0.3)",
-            scrollTrigger: {
-                trigger: '.nosotros',
-                markers: true,
-                //start: 'top top+=100',
-                //events: onEnter onLeave onEnterBack OnLeaveBack
-                //options: play pause, resume, reset, restart, complete, reverse, none
-                toggleActions: 'play pause reverse reset',
-            }
         });
+    
+    tlNosotros.fromTo('.nosotros-p', 
+        { x: -100, y: 0, autoAlpha: 0},
+        {
+            duration: 1.25, 
+            delay: 0.2,
+            x: 0,
+            y: 0, 
+            autoAlpha: 1, 
+            stagger: 1,
+            ease: "expo", 
+            overwrite: "auto"
+        },
+        '<');
+
+    tlNosotros.fromTo('.nosotros-h4', 
+        {
+            scale:3, autoAlpha: 0
+        },{
+            duration: 1.25, 
+            delay: 0.5,
+            scale: 1,
+            autoAlpha: 1, 
+            ease: "expo", 
+            overwrite: "auto"
+        },
+        '<');
 
     // gsap.to('.nosotros-p1',{
     //     transformX: -25,
     //     scrollTrigger: '.nosotros'
     // });
 
-    gsap.utils.toArray(".nosotros-p, .nosotros-h4").forEach(function(elem) {
-        hide(elem); 
-        ScrollTrigger.create({
-            trigger: '.nosotros',
-            start: 'top center',
-            onEnter: function() { animateFrom(elem) }, 
-            onEnterBack: function() { animateFrom(elem, -1) },
-            onLeave: function() { hide(elem) } // assure that the element is hidden when scrolled into view
-        });
-    });
+    // gsap.utils.toArray(".nosotros-p, .nosotros-h4").forEach(function(elem) {
+    //     hide(elem); 
+    //     ScrollTrigger.create({
+    //         trigger: '.nosotros',
+    //         start: 'top center',
+    //         onEnter: function() { animateFrom(elem) }, 
+    //         onEnterBack: function() { animateFrom(elem, -1) },
+    //         onLeave: function() { hide(elem) } // assure that the element is hidden when scrolled into view
+    //     });
+    // });
 
-    gsap.utils.toArray("#panel-1 img").forEach(function(elem, index) {
-        hide(elem); 
-        ScrollTrigger.create({
-            trigger: '#panel-1',
-            start: 'top center',
-            onEnter: function() { animateFrom(elem) }, 
-            onEnterBack: function() { animateFrom(elem, -1) },
-            onLeave: function() { hide(elem) } // assure that the element is hidden when scrolled into view
-        });
-    });
+    // gsap.utils.toArray("#panel-1 img").forEach(function(elem, index) {
+    //     hide(elem); 
+    //     ScrollTrigger.create({
+    //         trigger: '#panel-1',
+    //         start: 'top center',
+    //         onEnter: function() { animateFrom(elem) }, 
+    //         onEnterBack: function() { animateFrom(elem, -1) },
+    //         onLeave: function() { hide(elem) } // assure that the element is hidden when scrolled into view
+    //     });
+    // });
 
     function hide(elem) {
         gsap.set(elem, {autoAlpha: 0});
